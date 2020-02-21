@@ -57,7 +57,7 @@ case class Context(flow: FlowDef, mode: Mode, config: Config) extends MatrixCont
     (pipe.collect { case Success(c) => c }, pipe.collect { case Failure(e) => e })
   }
 
-  val implicits = Implicits
+  val implicits = PrimeImplicits
 
   val library = Library
 

@@ -24,8 +24,14 @@ trait Context[C <: Context[C]] {
   /** Type for user defined data. */
   type E[T]
 
+  /** Type for supported implicits. */
+  type I <: Implicits[C]
+
   /** Type for distributed data. */
   type U[T]
+
+  /** All implicits for this context. */
+  val implicits: I
 
   /**
    * Read data.
@@ -69,8 +75,7 @@ trait Encoder[T] extends java.io.Serializable
 
 /** Trait for capturing an operating context which supports Matrix operations. */
 trait MatrixContext[C <: MatrixContext[C]] extends Context[C] {
-  /** All implicits for this context. */
-  val implicits: Implicits[C]
+  type I = PrimeImplicits[C]
 
   /** All library data/functions for this context. */
   val library: Library[C]

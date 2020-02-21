@@ -19,11 +19,11 @@ import commbank.grimlock.framework.environment.{
   CellImplicits => FwCellImplicits,
   ContentImplicits => FwContentImplicits,
   EnvironmentImplicits => FwEnvironmentImplicits,
-  Implicits => FwImplicits,
   MatrixImplicits => FwMatrixImplicits,
   NativeOperations => FwNativeOperations,
   PartitionImplicits => FwPartitionImplicits,
   PositionImplicits => FwPositionImplicits,
+  PrimeImplicits => FwPrimeImplicits,
   ValueOperations => FwValueOperations
 }
 import commbank.grimlock.framework.content.Content
@@ -65,7 +65,7 @@ import shapeless.{ ::, =:!=, HList, HNil }
 import shapeless.nat.{ _0, _1, _2, _3, _4, _5, _6, _7, _8 }
 
 /** Implements all implicits. */
-case object Implicits extends FwImplicits[Context] {
+case object PrimeImplicits extends FwPrimeImplicits[Context] {
   val cell = CellImplicits
   val content = ContentImplicits
   val environment = EnvironmentImplicits
@@ -941,6 +941,8 @@ case object PositionImplicits extends FwPositionImplicits[Context] {
 /** Implements all native operations. */
 case class NativeOperations[X](data: Context.U[X]) extends FwNativeOperations[X, Context] {
   def ++(other: Context.U[X]): Context.U[X] = data ++ other
+
+  def collect[Y : Context.D](pf: PartialFunction[X, Y]): Context.U[Y] = data.collect(pf)
 
   def filter(f: (X) => Boolean): Context.U[X] = data.filter(f)
 

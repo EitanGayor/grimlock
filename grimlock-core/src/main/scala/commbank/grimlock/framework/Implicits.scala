@@ -55,6 +55,9 @@ trait NativeOperations[X, C <: Context[C]] {
   /** Return the union of this `U` and `other`. */
   def ++(other: C#U[X]): C#U[X]
 
+  /** Filter and map elements according to `pf`. */
+  def collect[Y : C#D](pf: PartialFunction[X, Y]): C#U[Y]
+
   /** Keep only items that satisfy the predicate `f`. */
   def filter(f: (X) => Boolean): C#U[X]
 
@@ -907,14 +910,17 @@ trait PositionImplicits[C <: Context[C]] {
 
 /** Capture all implicits together. */
 trait Implicits[C <: Context[C]] {
+  /** Environment related implicits. */
+  val environment: EnvironmentImplicits[C]
+}
+
+/** Capture all matrix specific implicits together. */
+trait PrimeImplicits[C <: MatrixContext[C]] extends Implicits[C] {
   /** Cell related implicits. */
   val cell: CellImplicits[C]
 
   /** Content related implicits. */
   val content: ContentImplicits[C]
-
-  /** Environment related implicits. */
-  val environment: EnvironmentImplicits[C]
 
   /** Matrix related implicits. */
   val matrix: MatrixImplicits[C]

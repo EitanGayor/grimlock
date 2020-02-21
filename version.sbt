@@ -12,4 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-version in ThisBuild := "0.7.11"
+version in ThisBuild := "0.7.12"
+

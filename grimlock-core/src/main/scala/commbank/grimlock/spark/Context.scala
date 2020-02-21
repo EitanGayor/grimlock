@@ -55,7 +55,7 @@ case class Context(session: SparkSession) extends MatrixContext[Context] {
     (rdd.collect { case Success(c) => c }, rdd.collect { case Failure(e) => e })
   }
 
-  val implicits = Implicits
+  val implicits = PrimeImplicits
 
   val library = Library
 

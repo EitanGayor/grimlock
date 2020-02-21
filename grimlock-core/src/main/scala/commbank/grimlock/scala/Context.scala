@@ -45,7 +45,7 @@ case class Context() extends MatrixContext[Context] {
     (list.collect { case Success(c) => c }, list.collect { case Failure(e) => e })
   }
 
-  val implicits = Implicits
+  val implicits = PrimeImplicits
 
   val library = Library
 
