@@ -53,6 +53,8 @@ case class Context() extends MatrixContext[Context] {
 
   def from[T : D](seq: Seq[T]): Context.U[T] = seq.toList
 
+  def materialise[T](data: U[T]): List[T] = data
+
   def nop(): Unit = ()
 }
 

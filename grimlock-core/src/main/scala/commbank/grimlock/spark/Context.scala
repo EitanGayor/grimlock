@@ -71,6 +71,10 @@ case class Context(session: SparkSession) extends MatrixContext[Context] {
     session.sparkContext.parallelize(seq)
   }
 
+  def materialise[T](data: U[T]): List[T] = data
+    .collect
+    .toList
+
   def nop(): Unit = ()
 }
 

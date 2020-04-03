@@ -59,6 +59,8 @@ import commbank.grimlock.spark.content.{ Contents, IndexedContents }
 import commbank.grimlock.spark.partition.Partitions
 import commbank.grimlock.spark.position.Positions
 
+import org.apache.spark.sql.{ Encoder => SparkEncoder, Encoders, SparkSession }
+
 import shapeless.{ ::, =:!=, HList, HNil }
 import shapeless.nat.{ _0, _1, _2, _3, _4, _5, _6, _7, _8 }
 
@@ -989,6 +991,22 @@ case class NativeOperations[X](data: Context.U[X]) extends FwNativeOperations[X,
     import enc.ct
 
     data.map(f)
+  }
+
+  def take(num: Int)(implicit enc: Context.D[X]): Context.U[X] = {
+    import enc.ct
+
+    // Have to use `Some` to force the type to be non-primitive (Kryo cannot serialise Scala primitive types)
+    implicit val kryo: SparkEncoder[Some[X]] = Encoders.kryo[Some[X]]
+
+    SparkSession
+      .builder()
+      .config(data.sparkContext.getConf)
+      .getOrCreate()
+      .createDataset(data.map(Some.apply))
+      .limit(math.max(0, num))
+      .rdd
+      .map(_.get)
   }
 }
 

@@ -883,6 +883,8 @@ case class NativeOperations[X](data: Context.U[X]) extends FwNativeOperations[X,
   def flatMap[Y : Context.D](f: (X) => TraversableOnce[Y]): Context.U[Y] = data.flatMap(f)
 
   def map[Y : Context.D](f: (X) => Y): Context.U[Y] = data.map(f)
+
+  def take(num: Int)(implicit enc: Context.D[X]): Context.U[X] = data.take(num)
 }
 
 /** Implements all value operations. */

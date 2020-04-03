@@ -59,6 +59,17 @@ trait Context[C <: Context[C]] {
   def from[T : C#D](seq: Seq[T]): U[T]
 
   /**
+   * Returns the distriubted list as an in in-memory list.
+   *
+   * @param data The distributed list.
+   *
+   * @return In-memory list containing the data.
+   *
+   * @note Avoid using this for very large distributed lists.
+   */
+  def materialise[T](data: C#U[T]): List[T]
+
+  /**
    * Create an empty instance of `U`, writes it but discards its output.
    *
    * This is a work around for Scalding when Matrix.materialise is the only output of a job. In that case it is

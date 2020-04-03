@@ -66,6 +66,9 @@ trait NativeOperations[X, C <: Context[C]] {
 
   /** Map each element using the function `f`. */
   def map[Y : C#D](f: (X) => Y): C#U[Y]
+
+  /** Return a new list by taking the first `num` elements of the original. */
+  def take(num: Int)(implicit enc: C#D[X]): C#U[X]
 }
 
 /** Defines operations for dealing with user defined values. */

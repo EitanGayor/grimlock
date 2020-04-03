@@ -124,10 +124,6 @@ case class Matrix[
     .tunedJoin(tuner, positions.map { case p => (p, ()) }, Option(SetMapSideJoin[Position[P], Cell[P]]()))
     .map { case (_, (c, _)) => c }
 
-  def materialise(context: Context): List[Cell[P]] = data
-    .collect
-    .toList
-
   def measure[
     D <: Nat : ToInt,
     T <: Tuner

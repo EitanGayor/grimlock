@@ -20,7 +20,7 @@ import commbank.grimlock.framework.environment.implicits._
 import commbank.grimlock.framework.metadata._
 import commbank.grimlock.framework.position._
 
-trait TestMatrixMaterialise extends TestMatrix {
+trait TestMaterialise extends TestGrimlock {
   val data = List(
     ("a", "one", Content(ContinuousSchema[Double](), 3.14)),
     ("a", "two", Content(NominalSchema[String](), "foo")),
@@ -44,27 +44,27 @@ trait TestMatrixMaterialise extends TestMatrix {
   )
 }
 
-class TestScalaMatrixMaterialise extends TestMatrixMaterialise with TestScala {
-  import commbank.grimlock.scala.environment.implicits._
+class TestScalaMaterialise extends TestMaterialise with TestScala {
+  import ctx.implicits.matrix.tuple2ToMatrix
 
-  "A Matrix.materialise" should "return its list" in {
-    data.materialise(ctx).sortBy(_.position) shouldBe result.sortBy(_.position)
+  "NativeOperations.materialise" should "return its list" in {
+    ctx.materialise(data.data).sortBy(_.position) shouldBe result.sortBy(_.position)
   }
 }
 
-class TestScaldingMatrixMaterialise extends TestMatrixMaterialise with TestScalding {
-  import commbank.grimlock.scalding.environment.implicits._
+class TestScaldingMaterialise extends TestMaterialise with TestScalding {
+  import ctx.implicits.matrix.tuple2ToMatrix
 
-  "A Matrix.materialise" should "return its list" in {
-    data.materialise(ctx).sortBy(_.position) shouldBe result.sortBy(_.position)
+  "NativeOperations.materialise" should "return its list" in {
+    ctx.materialise(data.data).sortBy(_.position) shouldBe result.sortBy(_.position)
   }
 }
 
-class TestSparkMatrixMaterialise extends TestMatrixMaterialise with TestSpark {
-  import commbank.grimlock.spark.environment.implicits._
+class TestSparkMaterialise extends TestMaterialise with TestSpark {
+  import ctx.implicits.matrix.tuple2ToMatrix
 
-  "A Matrix.materialise" should "return its list" in {
-    data.materialise(ctx).sortBy(_.position) shouldBe result.sortBy(_.position)
+  "NativeOperations.materialise" should "return its list" in {
+    ctx.materialise(data.data).sortBy(_.position) shouldBe result.sortBy(_.position)
   }
 }
 

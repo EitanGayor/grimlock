@@ -65,6 +65,12 @@ case class Context(flow: FlowDef, mode: Mode, config: Config) extends MatrixCont
 
   def from[T : D](seq: Seq[T]): Context.U[T] = TypedPipe.from(seq)
 
+  def materialise[T](data: U[T]): List[T] = data
+    .toIterableExecution
+    .waitFor(config, mode)
+    .getOrElse(Iterable.empty)
+    .toList
+
   def nop(): Unit = {
     val _ = TypedPipe.empty.write(NullSink)(flow, mode)
 

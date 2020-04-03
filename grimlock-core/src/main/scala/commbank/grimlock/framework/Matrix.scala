@@ -110,17 +110,6 @@ trait Matrix[
   def get[T <: Tuner](positions: C#U[Position[P]], tuner: T)(implicit ev: Matrix.GetTuner[C#U, T]): C#U[Cell[P]]
 
   /**
-   * Returns the matrix as in in-memory list of cells.
-   *
-   * @param context The operating context.
-   *
-   * @return A `List[Cell[P]]` of the cells.
-   *
-   * @note Avoid using this for very large matrices.
-   */
-  def materialise(context: C): List[Cell[P]]
-
-  /**
    * Returns the size of the matrix in dimension `dim`.
    *
    * @param dim      The dimension for which to get the size.
