@@ -13,7 +13,7 @@ install:
 - cp /etc/sbt/sbtopts .sbtopts; echo "-Dsbt.global.base=$TRAVIS_BUILD_DIR/ci" >> .sbtopts
 script:
 - sbt test package
-  && ci/sbt-ci-deploy.sh maven http://commbank.artifactoryonline.com/commbank ext-releases-local
+  && ci/sbt-ci-deploy.sh maven https://commbank.artifactoryonline.com/artifactory ext-releases-local
   && ci/sbt-ci-build-doc.sh https://commbank.github.io/ https://github.com/CommBank
   && ci/ci-push-branch.sh gh-pages
 after_script:
