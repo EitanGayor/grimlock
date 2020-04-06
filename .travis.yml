@@ -7,7 +7,7 @@ cache:
   - "$HOME/.ivy2"
   - "$HOME/.m2"
 install:
-- curl https://commbank.artifactoryonline.com/commbank/binaries/ci/ci-3.3.1-20161112085142-c2c258a.tar.gz | tar xz
+- curl https://commbank.artifactoryonline.com/artifactory/binaries/ci/ci-3.3.1-20161112085142-c2c258a.tar.gz | tar xz
 - cp src/deploy/sbt-ci-build-doc-no-version.sh ci/sbt-ci-build-doc.sh
 - ci/sbt-ci-setup.sh
 - cp /etc/sbt/sbtopts .sbtopts; echo "-Dsbt.global.base=$TRAVIS_BUILD_DIR/ci" >> .sbtopts
