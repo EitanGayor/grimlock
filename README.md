@@ -33,8 +33,8 @@ Getting Started
 Simply add the following lines to your build file:
 
 ```
-libraryDependencies += "au.com.cba.omnia" %% "grimlock-core" % "0.7.13"
-resolvers += "commbank-releases" at "http://commbank.artifactoryonline.com/commbank/ext-releases-local"
+libraryDependencies += "au.com.cba.omnia" %% "grimlock-core" % "0.7.14"
+resolvers += "commbank-releases" at "https://commbank.artifactoryonline.com/artifactory/ext-releases-local"
 ```
 
 For information on the API, see the [scaladoc](https://commbank.github.io/grimlock/latest/api/index.html). Links to detailed examples are included at the end of the Scalding and Spark sections below.
@@ -183,6 +183,7 @@ import commbank.grimlock.framework.position._
 
 import commbank.grimlock.library.aggregate._
 
+import commbank.grimlock.scala.Persist
 import commbank.grimlock.scala.environment._
 import commbank.grimlock.scala.environment.implicits._
 
@@ -199,8 +200,9 @@ scala> implicit val context = Context()
 The next step is to read in data (be sure to change <path to> to the correct path to the grimlock repo):
 
 ```
-scala> val (data, _) = context.loadText(
+scala> val (data, _) = context.read(
   "<path to>/grimlock/grimlock-examples/src/main/scala/commbank/grimlock/data/exampleInput.txt",
+  Persist.textLoader,
   Cell.shortStringParser(StringCodec :: StringCodec :: HNil, "|")
 )
 ```
@@ -335,6 +337,7 @@ import commbank.grimlock.framework.position._
 
 import commbank.grimlock.library.aggregate._
 
+import commbank.grimlock.scalding.Persist
 import commbank.grimlock.scalding.environment._
 import commbank.grimlock.scalding.environment.implicits._
 
@@ -351,8 +354,9 @@ scala> implicit val context = Context()
 The next step is to read in data (be sure to change <path to> to the correct path to the grimlock repo):
 
 ```
-scala> val (data, _) = context.loadText(
+scala> val (data, _) = context.read(
   "<path to>/grimlock/grimlock-examples/src/main/scala/commbank/grimlock/data/exampleInput.txt",
+  Persist.textLoader,
   Cell.shortStringParser(StringCodec :: StringCodec :: HNil, "|")
 )
 ```
@@ -488,6 +492,7 @@ import commbank.grimlock.framework.position._
 
 import commbank.grimlock.library.aggregate._
 
+import commbank.grimlock.spark.Persist
 import commbank.grimlock.spark.environment._
 import commbank.grimlock.spark.environment.implicits._
 
@@ -504,8 +509,9 @@ scala> implicit val context = Context(spark)
 The next step is to read in data (be sure to change <path to> to the correct path to the grimlock repo):
 
 ```
-scala> val (data, _) = context.loadText(
+scala> val (data, _) = context.read(
   "<path to>/grimlock/grimlock-examples/src/main/scala/commbank/grimlock/data/exampleInput.txt",
+  Persist.textLoader,
   Cell.shortStringParser(StringCodec :: StringCodec :: HNil, "|")
 )
 ```
